@@ -13,3 +13,12 @@ repo = "Shougo/ddu-filter-matcher_substring"
 [[plugins]]
 repo = "Shougo/ddu-kind-file"
 
+[[plugins]]
+repo = "uga-rosa/ddu-filter-converter_devicon"
+
+[[plugins]]
+repo = "4513ECHO/ddu-source-colorscheme"
+
+[[plugins]]
+repo = "sainnhe/everforest"
+

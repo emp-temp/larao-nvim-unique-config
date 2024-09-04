@@ -1,3 +1,4 @@
+-- plugin setting
 local denopsSrc = "~/.cache/dpp/repos/github.com/vim-denops/denops.vim"
 local denopsHello = "~/.cache/dpp/repos/github.com/vim-denops/denops-helloworld.vim"
 local denopsServer = "~/.cache/dpp/repos/github.com/vim-denops/denops-shared-server.vim"
@@ -45,6 +46,20 @@ vim.api.nvim_create_autocmd("User", {
 -- Setup ddu.vim
 vim.fn["ddu#custom#patch_local"]("file_recursive", {
 	ui = "ff",
+	uiParams = {
+		ff = {
+			filterFloatingPosition = "bottom",
+			filterSplitDirection = "floating",
+			floatingBorder = "rounded",
+			previewFloating = true,
+			previewFloatingBorder = "rounded",
+			previewFloatingTitle = "Preview",
+			previewSplit = "horizontal",
+			prompt = "> ",
+			split = "floating",
+			startFilter = true,
+		},
+	},
 	sources = {
 		{
 			name = { "file_rec" },
@@ -52,6 +67,13 @@ vim.fn["ddu#custom#patch_local"]("file_recursive", {
 				matchers = {
 					"matcher_substring",
 				},
+				converters = {
+					"converter_devicon",
+				},
+				ignoreCase = true,
+			},
+			params = {
+				ignoreDirectories = { "node_modules", ".git", ".vscode" }
 			},
 		},
 	},
@@ -72,6 +94,36 @@ vim.api.nvim_create_autocmd("FileType", {
 	end
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "ddu-ff-filter",
+	callback = function()
+		local opts = { noremap = true, silent = true, buffer = true }
+		vim.keymap.set({ "n", "i" }, "<CR>", [[<Esc><Cmd>close<CR>]], opts)
+	end
+})
+
+vim.keymap.set({ "n" }, "ff", [[<Cmd>call ddu#start(#{name: "file_recursive"})<CR>]])
+
+
+vim.fn["ddu#custom#patch_local"]("colorscheme", {
+	ui = "ff",
+	sources = {
+		{
+			name = { "colorscheme" },
+			options = {
+				matchers = {
+					"matcher_substring",
+				},
+			},
+		},
+	},
+	kindOptions = {
+		colorscheme = {
+			defaultAction = "set",
+		},
+	},
+})
+
 -- Setup Utils
 
 vim.api.nvim_create_user_command("DppInstall", "call dpp#async_ext_action('installer', 'install')", {})
@@ -82,3 +134,5 @@ vim.api.nvim_create_user_command("DppUpdate",
 	end,
 	{ nargs = "*" }
 )
+
+vim.cmd[[ colorscheme everforest ]]
