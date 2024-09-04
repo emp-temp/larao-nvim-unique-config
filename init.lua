@@ -1,3 +1,8 @@
+-- basic setting
+vim.opt.clipboard = "unnamedplus"
+vim.opt.number = true
+vim.opt.cursorline = true
+
 -- plugin setting
 local denopsSrc = "~/.cache/dpp/repos/github.com/vim-denops/denops.vim"
 local denopsHello = "~/.cache/dpp/repos/github.com/vim-denops/denops-helloworld.vim"
