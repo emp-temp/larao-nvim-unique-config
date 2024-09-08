@@ -20,5 +20,34 @@ repo = "uga-rosa/ddu-filter-converter_devicon"
 repo = "4513ECHO/ddu-source-colorscheme"
 
 [[plugins]]
+repo = "Shougo/ddc.vim"
+
+[[plugins]]
+repo = "Shougo/ddc-source-lsp"
+
+[[plugins]]
+repo = "Shougo/ddc-ui-native"
+
+[[plugins]]
+repo = "Shougo/ddc-source-around"
+
+[[plugins]]
+repo = "Shougo/ddc-filter-matcher_head"
+
+[[plugins]]
+repo = "Shougo/ddc-filter-sorter_rank"
+
+[[plugins]]
 repo = "sainnhe/everforest"
 
+[[plugins]]
+repo = "neovim/nvim-lspconfig"
+
+[[plugins]]
+repo = "nvim-treesitter/nvim-treesitter"
+
+[[plugins]]
+repo = "uga-rosa/ddc-source-lsp-setup"
+
+[[plugins]]
+repo = "uga-rosa/ddu-source-lsp"

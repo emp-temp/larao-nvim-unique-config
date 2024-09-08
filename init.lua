@@ -15,7 +15,7 @@ vim.g.denops_server_addr = "127.0.0.1:32123"
 vim.g["denops#debug"] = 1
 
 local dppSrc = "~/.cache/dpp/repos/github.com/Shougo/dpp.vim"
-local dppBase = "~/.cache/dpp/"
+local dppBase = "~/.cache/dpp"
 local dppConfig = "~/.config/nvim/dpp.ts"
 
 local dppToml = "~/.cache/dpp/repos/github.com/Shougo/dpp-ext-toml"
@@ -47,6 +47,9 @@ vim.api.nvim_create_autocmd("User", {
 		vim.notify("dpp make_state() is done")
 	end
 })
+
+-- ddc-source-lsp-setup
+require("ddc_source_lsp_setup").setup()
 
 -- Setup ddu.vim
 vim.fn["ddu#custom#patch_local"]("file_recursive", {
@@ -129,7 +132,103 @@ vim.fn["ddu#custom#patch_local"]("colorscheme", {
 	},
 })
 
--- Setup Utils
+vim.fn["ddu#custom#patch_local"]("lsp_definition", {
+	sync = true,
+	ui = "ff",
+	sources = {
+		{
+			name = { "lsp_definition" },
+		}
+	},
+	uiParams = {
+		ff = {
+			immediateAction = "open",
+		}
+	},
+	kindOptions = {
+		lsp = {
+			defaultAction = "open",
+		},
+		lsp_codeAction = {
+			defaultAction = "apply",
+		},
+	},
+})
+vim.fn["ddu#custom#patch_local"]("lsp_references", {
+	sync = true,
+	ui = "ff",
+	sources = {
+		{
+			name = { "lsp_references" },
+		}
+	},
+	uiParams = {
+		ff = {
+			immediateAction = "open",
+		}
+	},
+	kindOptions = {
+		lsp = {
+			defaultAction = "open",
+		},
+		lsp_codeAction = {
+			defaultAction = "apply",
+		},
+	},
+})
+vim.fn["ddu#custom#patch_local"]("lsp_documentSymbol", {
+	sync = true,
+	ui = "ff",
+	sources = {
+		{
+			name = { "lsp_documentSymbol" },
+		}
+	},
+	uiParams = {
+		ff = {
+			immediateAction = "open",
+		}
+	},
+	kindOptions = {
+		lsp = {
+			defaultAction = "open",
+		},
+		lsp_codeAction = {
+			defaultAction = "apply",
+		},
+	},
+})
+
+
+vim.keymap.set({ "n" }, "gd", [[<Cmd>call ddu#start(#{name: "lsp_definition"})<CR>]])
+vim.keymap.set({ "n" }, "gr", [[<Cmd>call ddu#start(#{name: "lsp_references"})<CR>]])
+vim.keymap.set({ "n" }, "gD", [[<Cmd>call ddu#start(#{name: "lsp_documentSymbol"})<CR>]])
+
+
+-- Setup ddc.vim
+vim.fn["ddc#custom#patch_global"]("ui", "native")
+vim.fn["ddc#custom#patch_global"]("sources", {"lsp"})
+vim.fn["ddc#custom#patch_global"]("sourceOptions", {
+	lsp = {
+
+		mark = "lsp",
+		forceCompletionPattern = "\\.\\w*|:\\w*|->\\w*",
+		sorters = {"sorter_lsp-kind"}
+	}
+})
+vim.fn["ddc#custom#patch_global"]("sourceParams", {
+	lsp = {
+		enableResolveItem = true,
+		enableAdditionalTextEdit = true,
+		enableDisplayDetail = true,
+		comfirmBehavior = "replace"
+	}
+})
+
+
+vim.fn["ddc#enable"]()-- Setup Utils
+
+-- custom command
 
 vim.api.nvim_create_user_command("DppInstall", "call dpp#async_ext_action('installer', 'install')", {})
 vim.api.nvim_create_user_command("DppUpdate", 
@@ -140,4 +239,22 @@ vim.api.nvim_create_user_command("DppUpdate",
 	{ nargs = "*" }
 )
 
+-- lsp config
+
+local lspconfig = require("lspconfig")
+
+lspconfig.gopls.setup {}
+
+-- treesitter config
+local treesitter = require("nvim-treesitter.configs")
+treesitter.setup {
+	highlight = {
+		enable = true
+	}
+}
+
+
 vim.cmd[[ colorscheme everforest ]]
+
+
+
