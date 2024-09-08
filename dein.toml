@@ -26,9 +26,6 @@ repo = "Shougo/ddc.vim"
 repo = "Shougo/ddc-source-lsp"
 
 [[plugins]]
-repo = "Shougo/ddc-ui-native"
-
-[[plugins]]
 repo = "Shougo/ddc-source-around"
 
 [[plugins]]
@@ -51,3 +48,12 @@ repo = "uga-rosa/ddc-source-lsp-setup"
 
 [[plugins]]
 repo = "uga-rosa/ddu-source-lsp"
+
+[[plugins]]
+repo = "Shougo/pum.vim"
+
+[[plugins]]
+repo = "folke/noice.nvim"
+
+[[plugins]]
+repo = "Shougo/ddc-ui-pum"
