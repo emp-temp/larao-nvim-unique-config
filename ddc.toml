@@ -1,0 +1,21 @@
+[[plugins]]
+repo = 'Shougo/ddc.vim'
+lua_source = '''
+require("larao.ddc")
+'''
+
+[[plugins]]
+repo = 'Shougo/pum.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-ui-pum'
+
+[[plugins]]
+repo = 'Shougo/ddc-source-around'
+
+[[plugins]]
+repo = 'Shougo/ddc-filter-matcher_head'
+
+[[plugins]]
+repo = 'Shougo/ddc-filter-sorter_rank'
+

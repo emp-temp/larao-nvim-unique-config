@@ -3,8 +3,10 @@ import {
   ContextBuilder,
   Dpp,
   Plugin,
-} from "https://deno.land/x/dpp_vim@v0.0.5/types.ts";
-import { Denops, fn } from "https://deno.land/x/dpp_vim@v0.0.5/deps.ts";
+} from "https://deno.land/x/dpp_vim@v1.0.0/types.ts";
+import { Denops, fn } from "https://deno.land/x/dpp_vim@v1.0.0/deps.ts";
+
+console.log("dpp.ts is loaded!");
 
 export class Config extends BaseConfig {
   override async config(args: {
@@ -35,44 +37,39 @@ export class Config extends BaseConfig {
     const dotfilesDir = "~/.config/nvim/";
 
     const tomls: Toml[] = [];
-    tomls.push(
-      await args.dpp.extAction(
-        args.denops,
-        context,
-        options,
-        "toml",
-        "load",
-        {
-          path: await fn.expand(args.denops, dotfilesDir + "dein.toml"),
-          options: {
-            lazy: false,
-          },
-        },
-      ) as Toml,
-    );
 
-    tomls.push(
-      await args.dpp.extAction(
-        args.denops,
-        context,
-        options,
-        "toml",
-        "load",
-        {
-          path: await fn.expand(args.denops, dotfilesDir + "dein_lazy.toml"),
-          options: {
-            lazy: true,
+    const toml_files: { name: string; lazy: boolean }[] = [
+      { name: "ddc.toml", lazy: false },
+      { name: "lsp.toml", lazy: false },
+      { name: "colorscheme.toml", lazy: false },
+    ];
+
+    const toml_promises = toml_files.map(async (toml) => {
+      console.log(toml);
+      tomls.push(
+        await args.dpp.extAction(
+          args.denops,
+          context,
+          options,
+          "toml",
+          "load",
+          {
+            path: await fn.expand(args.denops, dotfilesDir + toml.name),
+            options: {
+              lazy: toml.lazy,
+            },
           },
-        },
-      ) as Toml,
-    );
+        ) as Toml,
+      );
+    });
+
+    await Promise.all(toml_promises);
 
     const recordPlugins: Record<string, Plugin> = {};
     const ftplugins: Record<string, string> = {};
     const hooksFiles: string[] = [];
 
     tomls.forEach((toml) => {
-
       for (const plugin of toml.plugins) {
         recordPlugins[plugin.name] = plugin;
       }
@@ -102,6 +99,8 @@ export class Config extends BaseConfig {
         plugins: Object.values(recordPlugins),
       },
     ) as LazyMakeStateResult;
+
+    // console.log(Object.values(recordPlugins));
 
     return {
       plugins: lazyResult.plugins,
