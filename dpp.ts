@@ -40,8 +40,10 @@ export class Config extends BaseConfig {
 
     const toml_files: { name: string; lazy: boolean }[] = [
       { name: "ddc.toml", lazy: false },
+      { name: "ddu.toml", lazy: false },
       { name: "lsp.toml", lazy: false },
       { name: "colorscheme.toml", lazy: false },
+      { name: "utils.toml", lazy: false },
     ];
 
     const toml_promises = toml_files.map(async (toml) => {
@@ -108,3 +110,4 @@ export class Config extends BaseConfig {
     };
   }
 }
+

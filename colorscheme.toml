@@ -3,3 +3,6 @@ repo = 'bluz71/vim-nightfly-colors'
 lua_add = '''
 vim.cmd [[ colorscheme nightfly ]]
 '''
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
