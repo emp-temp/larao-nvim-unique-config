@@ -10,9 +10,10 @@ vim.fn["ddc#custom#patch_global"]('sourceOptions', {
   },
   lsp = {
     mark = "lsp",
-    forceCompletionPattern = "%.%w*|:%w*|%-%>%w*",
     dup = "keep",
     isVolatile = true,
+    keywordPattern = "%k+",
+    -- sorters = { "sorter_lsp-kind" },
   }
 })
 vim.fn["ddc#custom#patch_global"]("sourceParams", {
@@ -22,6 +23,7 @@ vim.fn["ddc#custom#patch_global"]("sourceParams", {
     end),
     enableResolveItem = true,
     enableAdditionalTextEdit = true,
+    confirmBehavior = "replace",
   }
 })
 vim.fn["ddc#custom#patch_global"]({
@@ -31,6 +33,10 @@ vim.fn["ddc#custom#patch_global"]({
     "TextChangedI",
     "TextChagnedP"
   }
+})
+
+vim.fn["pum#set_option"]({
+  border = "shadow"
 })
 
 vim.fn["ddc#enable"]()
@@ -47,11 +53,10 @@ end, { expr = true })
 vim.keymap.set({ "i" }, "<PageDown>", "<CMD>call pum#map#insert_relative_page(+1)<CR>", { noremap = true, silent = true })
 vim.keymap.set({ "i" }, "<PageUp>", "<CMD>call pum#map#insert_relative_page(-1)<CR>", { noremap = true, silent = true })
 
-local capabilities = require("ddc_source_lsp").make_client_capabilities()
+
+require("ddc_source_lsp_setup").setup()
 local lspconfig = require("lspconfig")
-lspconfig.rust_analyzer.setup({
-  capabilities = capabilities,
-})
-lspconfig.gopls.setup({
-  capabilities = capabilities,
-})
+lspconfig.rust_analyzer.setup({})
+lspconfig.gopls.setup({})
+
+

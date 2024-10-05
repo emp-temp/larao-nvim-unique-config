@@ -23,4 +23,7 @@ repo = 'Shougo/ddc-filter-sorter_rank'
 repo = 'Shougo/ddc-source-lsp'
 
 [[plugins]]
+repo = 'uga-rosa/ddc-source-lsp-setup'
+
+[[plugins]]
 repo = 'hrsh7th/vim-vsnip'
