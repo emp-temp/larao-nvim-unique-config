@@ -1,8 +1,11 @@
 [[plugins]]
 repo = 'bluz71/vim-nightfly-colors'
-lua_add = '''
+lua_source = '''
 vim.cmd [[ colorscheme nightfly ]]
 '''
 
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
+lua_source = '''
+require("larao.tree-sitter")
+'''
